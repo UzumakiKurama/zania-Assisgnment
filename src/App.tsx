@@ -9,7 +9,8 @@ import './App.css';
 function App() {
 
   const [data, setData] = useState<cardT[]>([]);
-
+  const [saving, setSaving] = useState<boolean>(false);
+  
   const moveCardHandler = useCallback((dragIndex : number, hoverIndex : number) => {
     setData(prevState => update(prevState, {
       $splice: [
@@ -34,7 +35,8 @@ function App() {
 
   // To save data in the sessionStorage we are sending a POST request 
   // which is intercepted by MSW and data is updated in sessionStorage
-  useEffect(() => {
+  
+  const saveDataToSessionStorage = (data : cardT[]) => {
     if(data.length > 1){
       fetch("/saveData", {
         method : "POST",
@@ -47,13 +49,35 @@ function App() {
       .then(res => res.json())
       .then(res => console.log(res));
     }
+  }
+
+  useEffect(() => {
+    saveDataToSessionStorage(data);
   }, [data])
+
+  // Showind a loading spinner every 5 seconds which shows a saving state
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setSaving(!saving)
+      saveDataToSessionStorage(data);
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, [saving])
 
   return (
     <DndProvider backend={HTML5Backend}>
       <MainGrid 
         data={data} 
         moveCardHandler={moveCardHandler} />
+        {
+          saving &&
+          <div className='loader-container'>
+            <div className='spinner'></div>
+          </div>
+        }
     </DndProvider>
   )
 }

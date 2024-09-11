@@ -1,5 +1,6 @@
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import Card from '../Card/Card';
+import ImageWithSpinner from '../ImageWIthSpinner/ImageWithSpinner';
 
 export interface cardT {
     type : string,
@@ -59,29 +60,22 @@ const MainGrid = ({
 
   return (
     <>
-      
         <div className="main_container">
-            {
-              data.length > 0 && 
-                  data.map((item, id) => renderCard(item,id)) 
-            }
+          {
+            data.length > 0 && 
+                data.map((item, id) => renderCard(item,id)) 
+          }
+          {
+            overlay.isOverlayVisible && 
+              <div
+                ref={overlayRef}
+                tabIndex={0} 
+                onKeyDown={keydownEventHandler} 
+                className='overlay_container'>
+                <ImageWithSpinner src={`/assets/${overlay.currOverlayImage}`} /> 
+              </div>
+          }
         </div>
-      
-        {
-          overlay.isOverlayVisible && 
-            <div
-              ref={overlayRef}
-              tabIndex={0} 
-              onKeyDown={keydownEventHandler} 
-              className='overlay_container'>
-            <img
-              autoFocus={true}
-                  height={400}
-                  width={600} 
-                  src={`/assets/${overlay.currOverlayImage}`} 
-                  alt='overlay image' />
-            </div>
-        }
     </>
   )
 }

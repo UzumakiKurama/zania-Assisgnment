@@ -24,3 +24,36 @@
     -webkit-backdrop-filter: blur(2rem);
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.loader-container{
+    position: absolute;
+    top: 40px;
+    right : 70px;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    margin: -25px 0 0 -25px; /* Center the spinner */
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #3498db;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+img {
+    max-width: 100%; /* Ensure responsive image */
+}

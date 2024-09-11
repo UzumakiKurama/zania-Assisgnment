@@ -1,6 +1,7 @@
 import { useDrag, useDrop } from "react-dnd"
 import { cardT } from "../MainGrid/MainGrid"
 import { useRef } from "react"
+import ImageWithSpinner from "../ImageWIthSpinner/ImageWithSpinner"
 
 const Card = ({ 
   cardDetails, 
@@ -53,22 +54,16 @@ const Card = ({
 
     drag(drop(ref));
 
-    return (
-      <div
-        ref={ref}
-        onClick={() => cardClickHandler(cardDetails.imgUrl)}
-        data-handler-id={handlerId} 
-        className='card_container'
-        style={{opacity : isDragging ? 0.7 : 1}}
-        >
-          <h1> {cardDetails.title} </h1>
-          <img 
-            height={250} 
-            width={350} 
-            src={`/assets/${cardDetails.imgUrl}`} 
-            alt='cat gif' />
-      </div>
-
+  return (
+    <div
+      ref={ref}
+      onClick={() => cardClickHandler(cardDetails.imgUrl)}
+      data-handler-id={handlerId} 
+      className='card_container'
+      style={{opacity : isDragging ? 0.7 : 1}}>
+        <h1> {cardDetails.title} </h1>
+        <ImageWithSpinner src={`/assets/${cardDetails.imgUrl}`} />
+    </div>
   )
 }
 
