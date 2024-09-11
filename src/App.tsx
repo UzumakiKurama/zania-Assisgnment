@@ -35,16 +35,18 @@ function App() {
   // To save data in the sessionStorage we are sending a POST request 
   // which is intercepted by MSW and data is updated in sessionStorage
   useEffect(() => {
-    fetch("/saveData", {
-      method : "POST",
-      headers : {
-        'Content-Type' : 'application/json',
-        'Accept' : 'application/json'
-      },
-      body : JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(res => console.log(res));
+    if(data.length > 1){
+      fetch("/saveData", {
+        method : "POST",
+        headers : {
+          'Content-Type' : 'application/json',
+          'Accept' : 'application/json'
+        },
+        body : JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => console.log(res));
+    }
   }, [data])
 
   return (
